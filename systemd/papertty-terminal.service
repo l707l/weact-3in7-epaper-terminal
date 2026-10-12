@@ -1,5 +1,5 @@
 [Unit]
-Description=PaperTTY Terminal for WeAct 3.7 e-Paper (Terminus 6x12 Native Bitmap Calibrated)
+Description=PaperTTY Terminal for WeAct 3.7 e-Paper (Terminus 6x12 High-Performance)
 After=local-fs.target
 DefaultDependencies=no
 After=basic.target
@@ -12,7 +12,13 @@ Environment=PYTHONPATH=/home/q/PaperTTY
 Environment=PYTHONUNBUFFERED=1
 ExecStart=/home/q/PaperTTY/venv/bin/python3 -m papertty.papertty --driver WeAct3in7_UC8253 terminal --vcsa /dev/vcsa1 --font /usr/share/fonts/truetype/terminus/TerminusTTF-4.46.0.ttf --size 12 --autofit --sleep 0.05 --cursor none
 Restart=always
-RestartSec=3
+RestartSec=2
+
+# Prioridad de CPU e I/O para latencia mínima
+Nice=-10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=2
+OOMScoreAdjust=-500
 
 [Install]
 WantedBy=multi-user.target
